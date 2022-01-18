@@ -5,12 +5,12 @@ import com.cbyk.blogg.model.BlogRequest;
 import com.cbyk.blogg.service.BlogService;
 import com.cbyk.blogg.util.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 public class AdminController {
@@ -34,7 +34,7 @@ public class AdminController {
         return "data_template";
     }
 
-    @GetMapping("/createPage")
+    @GetMapping("/create-b")
     public String createBlog() {
 //        String data= TestData.firstTestBlog;
 //        BlogPost blogPost =new BlogPost("Heading","subheading",data,"Chirag Bhasin","17/03/21");
@@ -42,16 +42,17 @@ public class AdminController {
         return "create_blog";
     }
 
-    @PostMapping("/saveBlog")
-    public String saveBlog(@RequestBody BlogRequest request) {
-        BlogPost blog = new BlogPost(request);
+    @PostMapping(value = "/saveBlog", consumes = "application/x-www-form-urlencoded;charset=UTF-8",
+            produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String saveBlog( @RequestParam Map<String, String> request) {
+        BlogPost blog = new BlogPost(request.get("title"),request.get("blogBody"));
         blogService.saveBLog(blog);
         return "blog_saved";
     }
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("blogList",blogService.fetchAllBlogs());
+        model.addAttribute("blogList", blogService.fetchAllBlogs());
         return "blog_list";
     }
 

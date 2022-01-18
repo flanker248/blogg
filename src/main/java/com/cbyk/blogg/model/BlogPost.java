@@ -34,5 +34,8 @@ public class BlogPost {
         this.blogBody = request.blogBody;
         this.title = request.title;
     }
-
+    public BlogPost(String b,String t) {
+        this.blogBody = t;
+        this.title = b;
+    }
 }
