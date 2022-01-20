@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -54,6 +56,28 @@ public class AdminController {
     public String list(Model model) {
         model.addAttribute("blogList", blogService.fetchAllBlogs());
         return "blog_list";
+    }
+
+    @GetMapping("/tests")
+    public String tests(Model model) {
+        blogService.fetchAllBlogs().stream().forEach(b->{
+            System.out.println(b.id);
+        });
+
+        BlogPost bp=blogService.getBlogById("61e5b56f181931584313efce");
+        System.out.println("bp: "+bp.title);
+
+
+        BlogPost blogPost=new BlogPost("title 7","<b>BODY of blog 7</b>");
+        blogService.saveBLog(blogPost);
+        return "blog_saved";
+
+
+        //
+        // added spring security dep
+        // Auditing code implemented : restructuring + auditing
+
+
     }
 
 }
