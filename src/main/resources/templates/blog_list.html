@@ -58,7 +58,7 @@
 
                 <!-- Post preview-->
                 <div class="post-preview">
-                    <a href="post.html">
+                    <a th:href="@{/view/{id}(id=${blog.id})}">
                         <h2 class="post-title" th:text="${blog.title}"></h2>
                         <h3 class="post-subtitle" th:text="${blog.subTitle}"></h3>
                     </a>

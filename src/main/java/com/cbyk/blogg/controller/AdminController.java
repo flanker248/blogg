@@ -32,7 +32,7 @@ public class AdminController {
     public String datatest(Model model) {
         String data = TestData.firstTestBlog;
         BlogPost blogPost = new BlogPost("Heading", "subheading", data, "Chirag Bhasin", "17/03/21");
-        model.addAttribute("blog", blogPost);
+        model.addAttribute("blogPost", blogPost);
         return "data_template";
     }
 
@@ -56,6 +56,12 @@ public class AdminController {
     public String list(Model model) {
         model.addAttribute("blogList", blogService.fetchAllBlogs());
         return "blog_list";
+    }
+
+    @GetMapping("/view/{uid}")
+    public String viewBlog(Model model,@PathVariable String uid) {
+        model.addAttribute("blogPost", blogService.getBlogById(uid));
+        return "blogPostDetail";
     }
 
     @GetMapping("/tests")
