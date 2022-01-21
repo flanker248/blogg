@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class AdminController {
@@ -54,12 +56,14 @@ public class AdminController {
 
     @GetMapping("/list")
     public String list(Model model) {
+        model.addAttribute("faker1", UUID.randomUUID().toString());
+        model.addAttribute("faker2",  ZonedDateTime.now().toInstant().toEpochMilli());
         model.addAttribute("blogList", blogService.fetchAllBlogs());
         return "blog_list";
     }
 
-    @GetMapping("/view/{uid}")
-    public String viewBlog(Model model,@PathVariable String uid) {
+    @GetMapping("/view/{faker1}/{uid}/{faker2}")
+    public String viewBlog(Model model,@PathVariable String uid,@PathVariable String faker1,@PathVariable String faker2) {
         model.addAttribute("blogPost", blogService.getBlogById(uid));
         return "blogPostDetail";
     }
