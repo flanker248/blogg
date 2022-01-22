@@ -7,6 +7,7 @@ import com.cbyk.blogg.service.MyUserDetailsService;
 import com.cbyk.blogg.util.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
 
@@ -26,6 +28,22 @@ public class AdminController {
 
     @Autowired
     MyUserDetailsService userService;
+
+
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/testpa")
+    public String testpa() {
+        return "blog_saved";
+    }
+
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/testpb")
+    public String testpb() {
+        return "blog_saved";
+    }
+
 
 
     @GetMapping("/create-b")
