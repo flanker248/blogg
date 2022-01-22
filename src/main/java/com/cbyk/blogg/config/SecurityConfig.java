@@ -19,6 +19,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+
 
 @Configuration
 @EnableWebSecurity
@@ -42,8 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("javainuse")
-//                .password("javainuse").roles("USER");
+//        auth.inMemoryAuthentication().withUser("resu")
+//                .password("resu").roles("USER")
+//                .and().withUser("cbyk").password("$2a$10$jWehFuLDiNPOPhy3nWWbxOs6jaPvxopZ1zt2Jgp71u4eDWeyGhrba")
+//                .roles("Admin");
         auth.authenticationProvider(authProvider());
     }
 
@@ -56,13 +68,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .permitAll().and().logout()
 //                .logoutSuccessUrl("/blog_list.html");
 
-        http.authorizeRequests()
-                .antMatchers("/admin/**").hasRole("Admin")
+//        .antMatchers("/homePage").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+
+        http.csrf().and().cors().disable()
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("Admin") // role in DB should be ROLE_Admin as SS automaticlly appends "ROLE_"
+//                .antMatchers("/admin/**").hasAuthority("Admin")
                 .antMatchers("**").permitAll().and().formLogin()
 
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/blog_list",true);
+                .defaultSuccessUrl("/list",false);
 
 //                .and()
 //                .logout()
@@ -73,6 +89,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .accessDeniedPage("/accessDenied");
 
 
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }
