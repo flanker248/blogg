@@ -38,22 +38,6 @@ public class BlogController {
         return "data_template";
     }
 
-    @GetMapping("/create-b")
-    public String createBlog() {
-//        String data= TestData.firstTestBlog;
-//        BlogPost blogPost =new BlogPost("Heading","subheading",data,"Chirag Bhasin","17/03/21");
-//        model.addAttribute("blog", blogPost);
-        return "create_blog";
-    }
-
-    @PostMapping(value = "/saveBlog", consumes = "application/x-www-form-urlencoded;charset=UTF-8",
-            produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String saveBlog( @RequestParam Map<String, String> request) {
-        BlogPost blog = new BlogPost(request.get("title"),request.get("blogBody"));
-        blogService.saveBLog(blog);
-        return "blog_saved";
-    }
-
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("faker1", UUID.randomUUID().toString());
