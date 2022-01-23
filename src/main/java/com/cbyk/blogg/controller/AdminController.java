@@ -31,18 +31,18 @@ public class AdminController {
 
 
 
-    @PreAuthorize("hasAuthority('Admin')")
-    @GetMapping("/testpa")
-    public String testpa() {
-        return "blog_saved";
-    }
-
-
-    @PreAuthorize("hasAuthority('Admin')")
-    @GetMapping("/testpb")
-    public String testpb() {
-        return "blog_saved";
-    }
+//    @PreAuthorize("hasAuthority('Admin')")
+//    @GetMapping("/testpa")
+//    public String testpa() {
+//        return "blog_saved";
+//    }
+//
+//
+//    @PreAuthorize("hasAuthority('Admin')")
+//    @GetMapping("/testpb")
+//    public String testpb() {
+//        return "blog_saved";
+//    }
 
 
 
