@@ -23,6 +23,23 @@ public class BlogController {
     @Autowired
     BlogService blogService;
 
+    @GetMapping("/")
+    public String greeting(Model model) {
+        return "blog_list";
+    }
+
+    @GetMapping("/about")
+    public String about(Model model) {
+        return "about";
+    }
+
+
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        return "contact";
+    }
+
+
     @GetMapping("/post/{uuid}")
     public String greeting(@PathVariable String uuid, Model model) {
         model.addAttribute("name", uuid);
