@@ -61,6 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
+        String[] staticResources  =  {
+                "/css/**",
+                "/images/**",
+                "/fonts/**",
+                "/scripts/**",
+        };
 //        http.antMatcher("/**").authorizeRequests().anyRequest().hasRole("USER")
 //                .and().formLogin()
 //                .loginPage("/login.jsp")
@@ -72,15 +79,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().and().cors().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("Admin") // role in DB should be ROLE_Admin as SS automaticlly appends "ROLE_"
+                .antMatchers("/admin/*").hasRole("Admin") // role in DB should be ROLE_Admin as SS automaticlly appends "ROLE_"
+//                .antMatchers("/admin/assets/*/*").permitAll() TODO : this config isnt working
 //                .antMatchers("/admin/**").hasAuthority("Admin")
                 .antMatchers("**").permitAll().and().formLogin()
 
-                .and()
-                .formLogin()
-                .defaultSuccessUrl("/list",false);
+//                .defaultSuccessUrl("/list",false);
 
-//                .and()
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
 //                .logout()
 //                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 //
