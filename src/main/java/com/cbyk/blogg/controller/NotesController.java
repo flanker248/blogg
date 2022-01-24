@@ -20,11 +20,6 @@ public class NotesController {
         return noteService.fetchAllNotesByTitle(title);
     }
 
-    @GetMapping("/notetest")
-    public Note notetest() {
-        return new Note("Test");
-    }
-
     @PostMapping("/createNote")
     public NoteDTO createNote(@RequestBody NoteDTO noteDTO) {
         noteService.createNote(noteDTO);
