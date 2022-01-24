@@ -77,11 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //        .antMatchers("/homePage").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 
-        http.csrf().and().cors().disable()
+        http.csrf().disable().cors().disable()
                 .authorizeRequests()
-                .antMatchers(staticResources).permitAll()// TODO : this config isnt working
+                .antMatchers(staticResources).permitAll()
+                .antMatchers("/notes/**").permitAll() // role in DB should be ROLE_Admin as SS automaticlly appends "ROLE_"
                 .antMatchers("/admin/*").hasRole("Admin") // role in DB should be ROLE_Admin as SS automaticlly appends "ROLE_"
 //                .antMatchers("/admin/**").hasAuthority("Admin")
+//                .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
                 .antMatchers("**").permitAll().and().formLogin()
 
 //                .defaultSuccessUrl("/list",false);
