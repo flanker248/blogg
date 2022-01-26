@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.ZonedDateTime;
 import java.util.Map;
@@ -24,8 +26,9 @@ public class BlogController {
     BlogService blogService;
 
     @GetMapping("/")
-    public String greeting(Model model) {
-        return "blog_list";
+    public String greeting(ModelMap model) {
+        return "redirect:list";
+
     }
 
     @GetMapping("/about")
