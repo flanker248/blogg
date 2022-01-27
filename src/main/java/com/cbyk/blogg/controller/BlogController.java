@@ -100,13 +100,7 @@ public class BlogController {
 
         BlogPost blogPost = new BlogPost("title 7", "<b>BODY of blog 7</b>");
         blogService.saveBLog(blogPost);
-        return "blog_saved";
-
-
-        //
-        // added spring security dep
-        // Auditing code implemented : restructuring + auditing
-
+        return "redirect:list";
 
     }
 
