@@ -25,6 +25,8 @@ import java.util.UUID;
 public class BlogController {
 
 
+    public static String bgimageurl="https://cbyk-bucket-test.s3.ap-southeast-1.amazonaws.com/blowg/bg3.jpg";
+
     @Autowired
     BlogService blogService;
 
@@ -38,8 +40,8 @@ public class BlogController {
     }
 
     @GetMapping(value = "/res", produces = MediaType.IMAGE_JPEG_VALUE)
-    public void res(HttpServletResponse response, @RequestParam String resourceName, String type) throws IOException {
-        ClassPathResource imgFile = resourceService.fetchResource(resourceName, type);
+    public void res(HttpServletResponse response, @RequestParam String rn, String tp) throws IOException {
+        ClassPathResource imgFile = resourceService.fetchResource(rn, tp);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
     }
@@ -76,6 +78,7 @@ public class BlogController {
         model.addAttribute("faker1", UUID.randomUUID().toString());
         model.addAttribute("faker2", ZonedDateTime.now().toInstant().toEpochMilli());
         model.addAttribute("blogList", blogService.fetchAllBlogs());
+        model.addAttribute("bgurl", bgimageurl);
         return "blog_list";
     }
 
@@ -107,4 +110,13 @@ public class BlogController {
 
     }
 
+    @GetMapping("updatebg")
+    public String updatebg(@RequestParam String imgName) {
+        bgimageurl="https://cbyk-bucket-test.s3.ap-southeast-1.amazonaws.com/blowg/"+imgName;
+        return "";
+    }
+
+    // comment hot reloading code
+    // change image dynamically code
+    // updatebg to be secured
 }
