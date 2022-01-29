@@ -48,12 +48,14 @@ public class BlogController {
 
     @GetMapping("/about")
     public String about(Model model) {
+        model.addAttribute("bgurl", bgimageurl);
         return "about";
     }
 
 
     @GetMapping("/contact")
     public String contact(Model model) {
+        model.addAttribute("bgurl", bgimageurl);
         return "contact";
     }
 
@@ -110,7 +112,6 @@ public class BlogController {
         return "";
     }
 
-    // comment hot reloading code
-    // change image dynamically code
+    // change about and contact bg url code to match list page code
     // updatebg to be secured
 }
