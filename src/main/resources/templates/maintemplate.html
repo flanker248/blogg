@@ -86,7 +86,7 @@
                 <div class="site-heading">
                     <h1 >Blogg</h1>
                     <span class="writer">
-                    <span style="line-height:1.3" class="subheading writer-text">Chirag's own Blog (CMS)</span>
+                    <span style="line-height:1.3" class="subheading writer-text">A Blog space and CMS</span>
                     </span>
                 </div>
             </div>
@@ -110,8 +110,8 @@
                     </a>
                     <p class="post-meta">
                         Posted by
-                        <a href="#!">Flanker</a>
-                        on January 18, 2022
+                        <a href="#!" th:text="${blogPost.author}"></a>
+                        <span th:text="on ${blogPost.formattedDate()}"></span>
                     </p>
                 </div>
                 <!-- Divider-->

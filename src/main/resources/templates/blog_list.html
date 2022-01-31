@@ -32,8 +32,8 @@
                     </a>
                     <p class="post-meta">
                         Posted by
-                        <a href="#!">Flanker</a>
-                        on January 18, 2022
+                        <a href="#!" th:text="${blog.createdBy}"></a>
+                        <span th:text="on + ' '+${blog.formattedDate()}"></span>
                     </p>
                 </div>
                 <!-- Divider-->
