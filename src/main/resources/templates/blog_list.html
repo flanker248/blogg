@@ -25,7 +25,6 @@
 
                 <!-- Post preview-->
                 <div class="post-preview">
-                    <!--                    <a th:href="@{/view/{id}/{faker1}(id=${blog.id},fak1='dcbjrmi73')}">-->
                     <a th:href="@{/view/{faker1}/{id}/{faker2}(id=${blog.id},faker1=${faker1},faker2=${faker2})}">
                         <h2 class="post-title" th:text="${blog.title}"></h2>
                         <h3 class="post-subtitle" th:text="${blog.subTitle}"></h3>
