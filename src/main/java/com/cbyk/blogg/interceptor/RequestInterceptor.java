@@ -26,10 +26,10 @@ public class RequestInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ipAddress = request.getRemoteAddr();
-        if(!request.getRequestURI().contains("notes/hotspot")){
+        if(request.getRequestURI().contains("/notes/") ||
+                request.getRequestURI().contains("/blog/")){
             incrementValue(reqIp,ipAddress);
         }
-        System.out.println("Request arrived from :"+ipAddress);
         return true;
     }
 }
