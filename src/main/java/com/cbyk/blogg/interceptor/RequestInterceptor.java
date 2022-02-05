@@ -25,7 +25,6 @@ public class RequestInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ipAddress = request.getRemoteAddr();
-        System.out.println(request.getRequestURI());
         String uri = request.getRequestURI();
         if (!uri.equals("/notes/hotspot") && (uri.contains("/notes/") ||
                 uri.contains("/blog/") || uri.contains("/list"))) {
