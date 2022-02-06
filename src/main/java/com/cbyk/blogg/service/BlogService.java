@@ -6,6 +6,7 @@ import com.cbyk.blogg.model.BlogPost;
 import com.cbyk.blogg.repo.BlogPostsRepository;
 import com.cbyk.blogg.util.BlogStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +38,8 @@ public class BlogService {
 
 
     public List<BlogPost> fetchActiveBlogs() {
-        return repository.findAllByStatus(BlogStatus.ACTIVE.toString());
+        return repository.findAllByStatus(BlogStatus.ACTIVE.toString(),
+                Sort.by(Sort.Direction.DESC, "creationDate"));
     }
 
     public BlogPost getBlogById(String id) {
