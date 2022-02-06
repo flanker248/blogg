@@ -22,7 +22,7 @@ import java.util.UUID;
 public class BlogController {
 
 
-    public static String bgimageurl="https://cbyk-bucket-test.s3.ap-southeast-1.amazonaws.com/blowg/bg3.jpg";
+    public static String bgimageurl="https://cbyk-bucket-test.s3.ap-southeast-1.amazonaws.com/blowg/bg2.jpg";
 
     @Autowired
     BlogService blogService;

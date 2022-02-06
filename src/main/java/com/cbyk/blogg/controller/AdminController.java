@@ -7,6 +7,7 @@ import com.cbyk.blogg.util.BlogStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -38,10 +39,12 @@ public class AdminController {
 
 
     @GetMapping("/create-b")
-    public String createBlog() {
+    public String createBlog(Model model) {
 //        String data= TestData.firstTestBlog;
 //        BlogPost blogPost =new BlogPost("Heading","subheading",data,"Chirag Bhasin","17/03/21");
 //        model.addAttribute("blog", blogPost);
+        model.addAttribute("bgurl", BlogController.bgimageurl);
+
         return "create_blog";
     }
 
