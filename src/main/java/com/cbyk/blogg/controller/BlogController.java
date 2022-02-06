@@ -12,11 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.UUID;
@@ -88,22 +86,6 @@ public class BlogController {
     public String viewBlog(Model model, @PathVariable String uid, @PathVariable String faker1, @PathVariable String faker2) {
         model.addAttribute("blogPost", blogService.getBlogById(uid));
         return "blogPostDetail";
-    }
-
-    @GetMapping("/tests")
-    public String tests(Model model) {
-        blogService.fetchAllBlogs().stream().forEach(b -> {
-            System.out.println(b.id);
-        });
-
-        BlogPost bp = blogService.getBlogById("61e5b56f181931584313efce");
-        System.out.println("bp: " + bp.title);
-
-
-        BlogPost blogPost = new BlogPost("title 7", "<b>BODY of blog 7</b>");
-        blogService.saveBLog(blogPost);
-        return "redirect:list";
-
     }
 
     @GetMapping("updatebg")
