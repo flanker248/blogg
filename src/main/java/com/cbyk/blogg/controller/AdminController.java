@@ -3,6 +3,7 @@ package com.cbyk.blogg.controller;
 import com.cbyk.blogg.model.BlogPost;
 import com.cbyk.blogg.service.BlogService;
 import com.cbyk.blogg.service.MyUserDetailsService;
+import com.cbyk.blogg.util.BlogStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,6 @@ public class AdminController {
     MyUserDetailsService userService;
 
 
-
 //    @PreAuthorize("hasAuthority('Admin')")
 //    @GetMapping("/testpa")
 //    public String testpa() {
@@ -37,7 +37,6 @@ public class AdminController {
 //    }
 
 
-
     @GetMapping("/create-b")
     public String createBlog() {
 //        String data= TestData.firstTestBlog;
@@ -49,7 +48,7 @@ public class AdminController {
     @PostMapping(value = "/saveBlog", consumes = "application/x-www-form-urlencoded;charset=UTF-8",
             produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String saveBlog(@RequestParam Map<String, String> request) {
-        BlogPost blog = new BlogPost(request.get("title"), request.get("blogBody"));
+        BlogPost blog = new BlogPost(request.get("title"), request.get("blogBody"), BlogStatus.ACTIVE);
         blogService.saveBlog(blog);
         return "redirect:list";
     }
@@ -57,7 +56,7 @@ public class AdminController {
 
     @GetMapping("/rmv-blg")
     public String rmvblg(@RequestParam String uid) {
-        blogService.removeBlog(uid);
+        blogService.inactivateBlog(uid);
         return "redirect:list";
 
     }
