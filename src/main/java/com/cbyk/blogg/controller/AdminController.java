@@ -50,7 +50,7 @@ public class AdminController {
     public String saveBlog(@RequestParam Map<String, String> request) {
         BlogPost blog = new BlogPost(request.get("title"), request.get("blogBody"), BlogStatus.ACTIVE);
         blogService.saveBlog(blog);
-        return "redirect:list";
+        return "redirect:/list";
     }
 
 
