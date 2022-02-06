@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.ZonedDateTime;
-import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -77,7 +76,7 @@ public class BlogController {
     public String list(Model model) {
         model.addAttribute("faker1", UUID.randomUUID().toString());
         model.addAttribute("faker2", ZonedDateTime.now().toInstant().toEpochMilli());
-        model.addAttribute("blogList", blogService.fetchAllBlogs());
+        model.addAttribute("blogList", blogService.fetchActiveBlogs());
         model.addAttribute("bgurl", bgimageurl);
         return "blog_list";
     }

@@ -11,5 +11,6 @@ import java.util.List;
 public interface BlogPostsRepository extends MongoRepository<BlogPost,String> {
 
     List<BlogPost> findByTitleContaining(String title);
+    List<BlogPost> findAllByStatus(String status);
 
 }
