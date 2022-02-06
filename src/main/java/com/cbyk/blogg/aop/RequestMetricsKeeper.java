@@ -31,9 +31,11 @@ public class RequestMetricsKeeper {
     }
 
     @Around("BlogServicePointCut()")
-    public void aroundMethod(ProceedingJoinPoint pjp) throws Throwable {
+    public Object aroundMethod(ProceedingJoinPoint pjp) throws Throwable {
 //        incrementValue(reqIp,"");
-        pjp.proceed();
+        System.out.println("************* at BlogServicePointCut");
+        System.out.println("************* at BlogServicePointCut");
+        return pjp.proceed();
 
     }
 
