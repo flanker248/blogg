@@ -1,22 +1,14 @@
 package com.cbyk.blogg.controller;
 
 import com.cbyk.blogg.model.BlogPost;
-import com.cbyk.blogg.model.BlogRequest;
 import com.cbyk.blogg.service.BlogService;
 import com.cbyk.blogg.service.MyUserDetailsService;
-import com.cbyk.blogg.util.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -58,8 +50,16 @@ public class AdminController {
             produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String saveBlog(@RequestParam Map<String, String> request) {
         BlogPost blog = new BlogPost(request.get("title"), request.get("blogBody"));
-        blogService.saveBLog(blog);
-        return "blog_saved";
+        blogService.saveBlog(blog);
+        return "redirect:list";
+    }
+
+
+    @GetMapping("/rmv-blg")
+    public String rmvblg(@RequestParam String uid) {
+        blogService.removeBlog(uid);
+        return "redirect:list";
+
     }
 
 
