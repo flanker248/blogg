@@ -4,13 +4,12 @@ package com.cbyk.blogg.service;
 import com.cbyk.blogg.aop.Monitor;
 import com.cbyk.blogg.model.BlogPost;
 import com.cbyk.blogg.repo.BlogPostsRepository;
-import com.cbyk.blogg.util.BlogStatus;
+import com.cbyk.blogg.util.EntityStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Monitor
@@ -26,7 +25,7 @@ public class BlogService {
 
     public boolean inactivateBlog(String uid) {
         BlogPost blogPost=repository.findById(uid).get();
-        blogPost.status= BlogStatus.DELETED;
+        blogPost.status= EntityStatus.DELETED;
         repository.save(blogPost);
         return true;
     }
@@ -38,7 +37,7 @@ public class BlogService {
 
 
     public List<BlogPost> fetchActiveBlogs() {
-        return repository.findAllByStatus(BlogStatus.ACTIVE.toString(),
+        return repository.findAllByStatus(EntityStatus.ACTIVE.toString(),
                 Sort.by(Sort.Direction.DESC, "creationDate"));
     }
 

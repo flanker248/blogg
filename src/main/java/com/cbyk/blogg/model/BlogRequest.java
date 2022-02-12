@@ -3,6 +3,8 @@ package com.cbyk.blogg.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "blogPosts")
 public class BlogRequest {
 
@@ -15,6 +17,8 @@ public class BlogRequest {
     public String blogBody;
     public String authorFullname;
     public String date;
+    public List<Label> labels;
+
 
     public String formattedDate() {
         return date;

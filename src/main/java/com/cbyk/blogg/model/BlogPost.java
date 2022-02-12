@@ -1,10 +1,11 @@
 package com.cbyk.blogg.model;
 
 import com.cbyk.blogg.util.AppConstants;
-import com.cbyk.blogg.util.BlogStatus;
+import com.cbyk.blogg.util.EntityStatus;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Document(collection = "blogPosts")
 public class BlogPost extends BlogBaseObject {
@@ -12,7 +13,8 @@ public class BlogPost extends BlogBaseObject {
     public String title;
     public String subTitle;
     public String blogBody;
-    public BlogStatus status;
+    public EntityStatus status;
+    public List<Label> labels;
 
     public String formattedDate() {
         return new SimpleDateFormat(AppConstants.DATE_FORMAT_DDMMYYYY).format(creationDate);
@@ -30,9 +32,10 @@ public class BlogPost extends BlogBaseObject {
     public BlogPost(BlogRequest request) {
         this.blogBody = request.blogBody;
         this.title = request.title;
+        this.labels = request.labels;
     }
 
-    public BlogPost(String b, String t,BlogStatus status) {
+    public BlogPost(String b, String t, EntityStatus status) {
         this.blogBody = t;
         this.title = b;
         this.status = status;

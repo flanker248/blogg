@@ -1,5 +1,5 @@
 package com.cbyk.blogg.util;
 
-public enum BlogStatus {
+public enum EntityStatus {
     ACTIVE, DELETED,UNDER_REVIEW
 }
