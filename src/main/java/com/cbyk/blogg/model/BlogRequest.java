@@ -17,7 +17,7 @@ public class BlogRequest {
     public String blogBody;
     public String authorFullname;
     public String date;
-    public List<Label> labels;
+    public List<String> labels;
 
 
     public String formattedDate() {

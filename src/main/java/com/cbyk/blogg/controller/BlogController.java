@@ -2,6 +2,7 @@ package com.cbyk.blogg.controller;
 
 import com.cbyk.blogg.model.BlogPost;
 import com.cbyk.blogg.service.BlogService;
+import com.cbyk.blogg.service.LabelService;
 import com.cbyk.blogg.service.ResourceService;
 import com.cbyk.blogg.util.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,7 @@ public class BlogController {
         model.addAttribute("faker2", ZonedDateTime.now().toInstant().toEpochMilli());
         model.addAttribute("blogList", blogService.fetchActiveBlogs());
         model.addAttribute("bgurl", bgimageurl);
+        model.addAttribute("labelNameCssMap",LabelService.labelNameCssMap);
         return "blog_list";
     }
 

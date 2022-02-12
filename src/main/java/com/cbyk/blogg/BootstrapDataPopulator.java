@@ -2,6 +2,7 @@ package com.cbyk.blogg;
 
 import com.cbyk.blogg.model.User;
 import com.cbyk.blogg.repo.UserRepository;
+import com.cbyk.blogg.service.LabelService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,11 +21,15 @@ public class BootstrapDataPopulator implements InitializingBean {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    LabelService labelService;
+
 
     @Override
     public void afterPropertiesSet() throws Exception {
 
 //        bootstrapUserCBYK();
+        labelService.getAllActiveLabels();
 
     }
 

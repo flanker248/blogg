@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 @Document(collection = "blogPosts")
 public class BlogPost extends BlogBaseObject {
@@ -14,7 +15,7 @@ public class BlogPost extends BlogBaseObject {
     public String subTitle;
     public String blogBody;
     public EntityStatus status;
-    public List<Label> labels;
+    public List<String> labels;
 
     public String formattedDate() {
         return new SimpleDateFormat(AppConstants.DATE_FORMAT_DDMMYYYY).format(creationDate);
@@ -38,6 +39,12 @@ public class BlogPost extends BlogBaseObject {
     public BlogPost(String b, String t, EntityStatus status) {
         this.blogBody = t;
         this.title = b;
+        this.status = status;
+    }
+
+    public BlogPost(Map<String, Object> request, EntityStatus status) {
+        this.blogBody = (String) request.get("blogBody");
+        this.title = (String) request.get("title");
         this.status = status;
     }
 }

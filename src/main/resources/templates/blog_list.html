@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- Navigation-->
-<nav  th:insert="maintemplate.html :: topnavbar"></nav>
+<nav th:insert="maintemplate.html :: topnavbar"></nav>
 
 
 <!-- Page Header-->
@@ -33,6 +33,17 @@
                         Posted by
                         <a href="#!" th:text="${blog.createdBy}"></a>
                         <span th:text="on + ' '+${blog.formattedDate()}"></span>
+                    </p>
+                    <p th:if="${blog.labels!=null && !blog.labels.isEmpty()}">
+
+                        <span th:each="label:${blog.labels}">
+                            <label>&nbsp;
+                        <span th:text="${label}"
+                              th:classappend="${labelNameCssMap.get(label)}">
+                        </span>
+                            </label>
+                        </span>
+
                     </p>
                 </div>
                 <!-- Divider-->

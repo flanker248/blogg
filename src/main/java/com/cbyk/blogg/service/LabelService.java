@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,9 +27,14 @@ public class LabelService {
     @Autowired
     CacheService cacheService;
 
+    public static HashMap<String,String> labelNameCssMap=new HashMap<>();
+
     @Cacheable("allActiveLabels")
     public List<Label> getAllActiveLabels() {
-        return labelRepository.findAllByStatus(EntityStatus.ACTIVE.toString());
+         List<Label> labels=labelRepository.findAllByStatus(EntityStatus.ACTIVE.toString());
+         labels.forEach(l->labelNameCssMap.put(l.name,l.css));
+         return labels;
+
     }
 
 
