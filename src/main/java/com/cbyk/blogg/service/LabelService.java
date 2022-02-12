@@ -23,6 +23,9 @@ public class LabelService {
     @Autowired
     LabelRepository labelRepository;
 
+    @Autowired
+    CacheService cacheService;
+
     @Cacheable("allActiveLabels")
     public List<Label> getAllActiveLabels() {
         return labelRepository.findAllByStatus(EntityStatus.ACTIVE.toString());
@@ -31,6 +34,7 @@ public class LabelService {
 
     public boolean createLabel(LabelDTO labelDTO){
         labelRepository.save(new Label(labelDTO));
+        cacheService.evictAllCacheValues("allActiveLabels");
         return true;
     }
 
@@ -43,6 +47,7 @@ public class LabelService {
         update.set("status", EntityStatus.DELETED);
 
         mongoTemplate.findAndModify(query, update, Label.class);
+        cacheService.evictAllCacheValues("allActiveLabels");
         return true;
     }
 
