@@ -38,13 +38,17 @@ public class LabelService {
         return true;
     }
 
-    public boolean removeLabel(String name){
+    public boolean updateLabel(LabelDTO labelDTO){
 
         Query query= new Query();
-        query.addCriteria(Criteria.where("name").is(name));
+        query.addCriteria(Criteria.where("name").is(labelDTO.name));
 
         Update update = new Update();
-        update.set("status", EntityStatus.DELETED);
+        update.set("status", labelDTO.status.toString());
+        update.set("css", labelDTO.css);
+        if(labelDTO.updatedName!=null && !"".equals(labelDTO.updatedName)){
+            update.set("name", labelDTO.updatedName);
+        }
 
         mongoTemplate.findAndModify(query, update, Label.class);
         cacheService.evictAllCacheValues("allActiveLabels");

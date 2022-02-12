@@ -31,9 +31,9 @@ public class LabelController {
         return "200";
     }
 
-    @PostMapping("/remove")
-    public String removeLabel(@RequestParam String labelName) {
-        labelService.removeLabel(labelName);
+    @PostMapping("/update")
+    public String updateLabel(@RequestBody LabelDTO labelDTO) {
+        labelService.updateLabel(labelDTO);
         return "200";
     }
 
