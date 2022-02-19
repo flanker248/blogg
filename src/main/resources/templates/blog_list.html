@@ -34,6 +34,10 @@
                         <a href="#!" th:text="${blog.createdBy}"></a>
                         <span th:text="on + ' '+${blog.formattedDate()}"></span>
                     </p>
+
+                    <p th:if="${isAdmin==true}">
+                        <button class="btn btn-danger">Delete Blog</button>
+                    </p>
                     <p th:if="${blog.labels!=null && !blog.labels.isEmpty()}">
 
                         <span th:each="label:${blog.labels}">

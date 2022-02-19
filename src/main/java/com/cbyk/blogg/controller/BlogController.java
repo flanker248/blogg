@@ -1,6 +1,7 @@
 package com.cbyk.blogg.controller;
 
 import com.cbyk.blogg.model.BlogPost;
+import com.cbyk.blogg.model.User;
 import com.cbyk.blogg.service.BlogService;
 import com.cbyk.blogg.service.LabelService;
 import com.cbyk.blogg.service.ResourceService;
@@ -8,6 +9,9 @@ import com.cbyk.blogg.util.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,6 +28,8 @@ public class BlogController {
 
 
     public static String bgimageurl="https://cbyk-bucket-test.s3.ap-southeast-1.amazonaws.com/blowg/bg2.jpg";
+
+    public static SimpleGrantedAuthority adminAuthority=new SimpleGrantedAuthority("ROLE_Admin");
 
     @Autowired
     BlogService blogService;
@@ -80,6 +86,17 @@ public class BlogController {
         model.addAttribute("blogList", blogService.fetchActiveBlogs());
         model.addAttribute("bgurl", bgimageurl);
         model.addAttribute("labelNameCssMap",LabelService.labelNameCssMap);
+//        model.addAttribute("isAdmin",false);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            System.out.println("user is logged in");
+            System.out.println(((UserDetails) principal).getAuthorities());
+            if(((UserDetails) principal).getAuthorities().contains(adminAuthority)){
+                System.out.println("adding isadmin to true");
+                model.addAttribute("isAdmin",true);
+            }
+        }
         return "blog_list";
     }
 
@@ -94,7 +111,4 @@ public class BlogController {
         bgimageurl="https://cbyk-bucket-test.s3.ap-southeast-1.amazonaws.com/blowg/"+imgName;
         return "";
     }
-
-    // change about and contact bg url code to match list page code
-    // updatebg to be secured
 }
