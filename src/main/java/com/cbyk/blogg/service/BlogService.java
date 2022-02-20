@@ -2,6 +2,7 @@ package com.cbyk.blogg.service;
 
 
 import com.cbyk.blogg.aop.Monitor;
+import com.cbyk.blogg.interceptor.RequestInterceptor;
 import com.cbyk.blogg.model.BlogPost;
 import com.cbyk.blogg.repo.BlogPostsRepository;
 import com.cbyk.blogg.util.EntityStatus;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 @Service
@@ -24,8 +28,8 @@ public class BlogService {
     }
 
     public boolean inactivateBlog(String uid) {
-        BlogPost blogPost=repository.findById(uid).get();
-        blogPost.status= EntityStatus.DELETED;
+        BlogPost blogPost = repository.findById(uid).get();
+        blogPost.status = EntityStatus.DELETED;
         repository.save(blogPost);
         return true;
     }
@@ -41,7 +45,12 @@ public class BlogService {
                 Sort.by(Sort.Direction.DESC, "creationDate"));
     }
 
+    public List<BlogPost> fetchAllBlogs() {
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "creationDate"));
+    }
+
     public BlogPost getBlogById(String id) {
         return repository.findById(id).orElse(null);
     }
+
 }

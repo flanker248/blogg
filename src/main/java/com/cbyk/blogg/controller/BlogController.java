@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -81,22 +82,23 @@ public class BlogController {
 
     @GetMapping("/list")
     public String list(Model model) {
+        boolean isAdmin=false;
         model.addAttribute("faker1", UUID.randomUUID().toString());
         model.addAttribute("faker2", ZonedDateTime.now().toInstant().toEpochMilli());
-        model.addAttribute("blogList", blogService.fetchActiveBlogs());
         model.addAttribute("bgurl", bgimageurl);
         model.addAttribute("labelNameCssMap",LabelService.labelNameCssMap);
 //        model.addAttribute("isAdmin",false);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
-            System.out.println("user is logged in");
-            System.out.println(((UserDetails) principal).getAuthorities());
             if(((UserDetails) principal).getAuthorities().contains(adminAuthority)){
-                System.out.println("adding isadmin to true");
-                model.addAttribute("isAdmin",true);
+                isAdmin=true;
+                model.addAttribute("isAdmin",isAdmin);
             }
         }
+        List<BlogPost> blogPosts=isAdmin?blogService.fetchAllBlogs():blogService.fetchActiveBlogs();
+        model.addAttribute("blogList", blogPosts);
+
         return "blog_list";
     }
 
